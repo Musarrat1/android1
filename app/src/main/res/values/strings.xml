@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">android1</string>
+    <string name="welcome_to_the_bakery">Welcome to the Bakery</string>
+    <string name="enter">Enter</string>
+    <string name="ice_cream">Ice Cream</string>
+    <string name="stawbery_ice_cream">Stawbery Ice Cream</string>
+    <string name="_20">$20</string>
+    <string name="select">Select</string>
 </resources>

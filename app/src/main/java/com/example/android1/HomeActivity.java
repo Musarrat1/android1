@@ -1,96 +1,77 @@
 package com.example.android1;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private CheckBox croissantCheckBox, donutCheckBox, eclairCheckBox;
-    private RadioGroup sizeGroup;
-    private Button incrementBtn, decrementBtn, placeOrderBtn;
-    private TextView quantityText, priceText, ratingText;
-    private RatingBar ratingBar;
-
     private int quantity = 0;
-    private int pricePerItem = 100;  // BDT 100 per item
-    private int totalPrice = 0;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);  // Ensure this is the name of your layout file
 
         // Initialize Views
-        croissantCheckBox = findViewById(R.id.croissant);
-        donutCheckBox = findViewById(R.id.donut);
-        eclairCheckBox = findViewById(R.id.eclair);
-        sizeGroup = findViewById(R.id.sizeGroup);
-        incrementBtn = findViewById(R.id.incrementQty);
-        decrementBtn = findViewById(R.id.decrementQty);
-        placeOrderBtn = findViewById(R.id.placeOrder);
-        quantityText = findViewById(R.id.quantityText);
-        priceText = findViewById(R.id.priceText);
-        ratingText = findViewById(R.id.ratingText);
-        ratingBar = findViewById(R.id.ratingBar);
+        CheckBox croissantCheckBox = findViewById(R.id.croissant);
+        CheckBox donutCheckBox = findViewById(R.id.donut);
+        CheckBox eclairCheckBox = findViewById(R.id.eclair);
+        Button incrementBtn = findViewById(R.id.incrementQty);
+        Button decrementBtn = findViewById(R.id.decrementQty);
+        Button placeOrderBtn = findViewById(R.id.placeOrder);
+        TextView quantityText = findViewById(R.id.quantityText);
+        TextView priceText = findViewById(R.id.priceText);
+        TextView ratingText = findViewById(R.id.ratingText);
+        RatingBar ratingBar = findViewById(R.id.ratingBar);
 
-        // Set up quantity increment and decrement
-        incrementBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                incrementQuantity();
-            }
+        // Set up quantity increment and decrement using lambdas
+        incrementBtn.setOnClickListener(view -> {
+            incrementQuantity();
+            updateQuantityAndPrice(quantityText, priceText, croissantCheckBox, donutCheckBox, eclairCheckBox);
         });
 
-        decrementBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                decrementQuantity();
-            }
+        decrementBtn.setOnClickListener(view -> {
+            decrementQuantity();
+            updateQuantityAndPrice(quantityText, priceText, croissantCheckBox, donutCheckBox, eclairCheckBox);
         });
 
-        // Set up RatingBar change listener
-        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-            @Override
-            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                ratingText.setText("Rating: " + rating);
-            }
-        });
+        // Set up RatingBar change listener using lambda
+        ratingBar.setOnRatingBarChangeListener((ratingBar1, rating, fromUser) ->
+                ratingText.setText("Rating: " + rating));
 
-        // Set up order button
-        placeOrderBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                calculateTotalPrice();
-            }
-        });
+        // Set up order button using lambda
+        placeOrderBtn.setOnClickListener(view ->
+                calculateTotalPrice(priceText, croissantCheckBox, donutCheckBox, eclairCheckBox));
     }
 
     private void incrementQuantity() {
         quantity++;
-        updateQuantityAndPrice();
     }
 
     private void decrementQuantity() {
         if (quantity > 0) {
             quantity--;
         }
-        updateQuantityAndPrice();
     }
 
-    private void updateQuantityAndPrice() {
+    private void updateQuantityAndPrice(TextView quantityText, TextView priceText,
+                                        CheckBox croissantCheckBox, CheckBox donutCheckBox, CheckBox eclairCheckBox) {
         quantityText.setText(String.valueOf(quantity));
-        calculateTotalPrice();
+        calculateTotalPrice(priceText, croissantCheckBox, donutCheckBox, eclairCheckBox);
     }
 
-    private void calculateTotalPrice() {
-        totalPrice = quantity * pricePerItem;
+    @SuppressLint("SetTextI18n")
+    private void calculateTotalPrice(TextView priceText,
+                                     CheckBox croissantCheckBox, CheckBox donutCheckBox, CheckBox eclairCheckBox) {
+        // BDT 100 per item
+        int pricePerItem = 100;
+        int totalPrice = quantity * pricePerItem;
 
         // Check selected items and adjust price accordingly
         if (croissantCheckBox.isChecked()) {

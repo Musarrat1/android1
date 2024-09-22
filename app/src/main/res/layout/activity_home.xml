@@ -1,23 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="20dp"
-    tools:context=".HomeActivity">
+    android:background="#FFFFFF"> <!-- Set a light background for contrast -->
 
+    <!-- Title -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Order your item"
+        android:text="@string/order_your_item"
         android:textSize="25sp"
         android:textStyle="bold"
-        android:textColor="#E91E63"
-        android:layout_gravity="center"
-        />
+        android:textColor="#333333"/>
 
     <!-- Select Bakery Items -->
     <TextView
@@ -27,9 +24,9 @@
         android:textSize="20sp"
         android:textStyle="bold"
         android:layout_marginTop="15dp"
-        android:textColor="@color/cardview_dark_background"
-        />
+        android:textColor="#333333" />
 
+    <!-- Checkboxes for items -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -41,14 +38,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
-            android:text="@string/croissant" />
+            android:text="@string/croissant"
+            android:textColor="#333333" />
 
         <CheckBox
             android:id="@+id/donut"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
-            android:text="@string/donut" />
+            android:text="@string/donut"
+            android:textColor="#333333" />
 
         <CheckBox
             android:id="@+id/eclair"
@@ -56,7 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
             android:text="@string/eclair"
-            tools:ignore="ExtraText" />
+            android:textColor="#333333" />
     </LinearLayout>
 
     <!-- Select Bakery Item Size -->
@@ -66,9 +65,8 @@
         android:text="@string/select_size"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:textColor="@color/cardview_dark_background"
-        android:layout_marginTop="15dp"
-        />
+        android:textColor="#333333"
+        android:layout_marginTop="15dp" />
 
     <RadioGroup
         android:id="@+id/sizeGroup"
@@ -81,19 +79,22 @@
             android:id="@+id/small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/small" />
+            android:text="@string/small"
+            android:textColor="#333333" />
 
         <RadioButton
             android:id="@+id/medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/medium" />
+            android:text="@string/medium"
+            android:textColor="#333333" />
 
         <RadioButton
             android:id="@+id/large"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/large" />
+            android:text="@string/large"
+            android:textColor="#333333" />
     </RadioGroup>
 
     <!-- Select Quantity -->
@@ -103,9 +104,8 @@
         android:text="@string/quantity"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:textColor="@color/cardview_dark_background"
-        android:layout_marginTop="15dp"
-        />
+        android:textColor="#333333"
+        android:layout_marginTop="15dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -113,14 +113,15 @@
         android:orientation="horizontal"
         android:layout_marginTop="10dp">
 
+        <!-- Decrement Quantity -->
         <Button
             android:id="@+id/decrementQty"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:text="@string/minus"
             android:textSize="18sp"
-            android:backgroundTint="#C9BD587A"
-            />
+            android:backgroundTint="#C9BD58"
+            android:textColor="#FFFFFF" />
 
         <TextView
             android:id="@+id/quantityText"
@@ -128,16 +129,18 @@
             android:layout_height="wrap_content"
             android:text="@string/_0"
             android:textSize="20sp"
-            android:layout_marginHorizontal="15dp"
-            />
+            android:textColor="#333333"
+            android:layout_marginHorizontal="15dp" />
 
+        <!-- Increment Quantity -->
         <Button
             android:id="@+id/incrementQty"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:text="@string/plus"
-            android:backgroundTint="#C9BD587A"
-            />
+            android:textSize="18sp"
+            android:backgroundTint="#C9BD58"
+            android:textColor="#FFFFFF" />
     </LinearLayout>
 
     <!-- Display Price -->
@@ -147,18 +150,18 @@
         android:text="@string/price_bdt_100_each"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:layout_marginTop="15dp"
-        />
+        android:textColor="#333333"
+        android:layout_marginTop="15dp" />
 
     <TextView
         android:id="@+id/priceText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/bdt_0"
+        android:text="@string/price_bdt"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:layout_marginTop="5dp"
-        />
+        android:textColor="#333333"
+        android:layout_marginTop="5dp" />
 
     <!-- Rating Bar -->
     <TextView
@@ -167,8 +170,9 @@
         android:text="@string/rate_us"
         android:textSize="25sp"
         android:textStyle="bold"
+        android:textColor="#333333"
         android:layout_marginTop="30dp"
-        android:gravity="center"/>
+        android:gravity="center" />
 
     <RatingBar
         android:id="@+id/ratingBar"
@@ -178,17 +182,18 @@
         android:stepSize="0.5"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:progressTint="#C9BD587A"
-        android:progressBackgroundTint="#FFEB3B"/>
+        android:progressTint="#C9BD58"
+        android:progressBackgroundTint="#FFEB3B" />
 
     <TextView
         android:id="@+id/ratingText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/rating_0_0"
+        android:text="@string/rating"
         android:textSize="20sp"
+        android:textColor="#333333"
         android:layout_marginTop="10dp"
-        android:gravity="center"/>
+        android:gravity="center" />
 
     <!-- Place Order Button -->
     <Button
@@ -198,7 +203,6 @@
         android:layout_marginTop="20dp"
         android:text="@string/place_order"
         android:textSize="18sp"
-        android:backgroundTint="#E91E63"
-        />
-
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#E91E63" />
 </LinearLayout>

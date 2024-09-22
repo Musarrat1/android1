@@ -1,83 +1,204 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:id="@+id/home"
+    android:padding="20dp"
     tools:context=".HomeActivity">
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/ice_cream"
-        android:textSize="30sp"
-        android:layout_margin="50dp"
-        android:textColor="#F2A95E79"
-        android:textStyle="bold"/>
-    <LinearLayout
+        android:text="Order your item"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:textColor="#E91E63"
+        android:layout_gravity="center"
+        />
+
+    <!-- Select Bakery Items -->
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-       <ImageView
-           android:layout_width="150dp"
-           android:layout_height="150dp"
-           android:src="@drawable/img"
-           />
-        <TextView
-            android:layout_width="100dp"
-            android:layout_height="60dp"
-            android:textAlignment="center"
-            android:layout_marginStart="20sp"
-            android:text="@string/stawbery_ice_cream"
-            android:textSize="20sp"/>
-        <TextView
-            android:layout_width="80dp"
-            android:layout_height="50dp"
-            android:textAlignment="center"
-            android:layout_marginStart="20sp"
-            android:text="@string/_20"
-            android:textStyle="bold"
-            android:textSize="20sp"/>
-        <Button
+        android:text="@string/select_items"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginTop="15dp"
+        android:textColor="@color/cardview_dark_background"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp">
+
+        <CheckBox
+            android:id="@+id/croissant"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:backgroundTint="#F2A95E79"
-            android:text="@string/select"/>
-        <ImageView
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:src="@drawable/img"
+            android:layout_marginEnd="10dp"
+            android:text="@string/croissant" />
+
+        <CheckBox
+            android:id="@+id/donut"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:text="@string/donut" />
+
+        <CheckBox
+            android:id="@+id/eclair"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:text="@string/eclair"
+            tools:ignore="ExtraText" />
+    </LinearLayout>
+
+    <!-- Select Bakery Item Size -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/select_size"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/cardview_dark_background"
+        android:layout_marginTop="15dp"
+        />
+
+    <RadioGroup
+        android:id="@+id/sizeGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp">
+
+        <RadioButton
+            android:id="@+id/small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/small" />
+
+        <RadioButton
+            android:id="@+id/medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/medium" />
+
+        <RadioButton
+            android:id="@+id/large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/large" />
+    </RadioGroup>
+
+    <!-- Select Quantity -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/quantity"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/cardview_dark_background"
+        android:layout_marginTop="15dp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp">
+
+        <Button
+            android:id="@+id/decrementQty"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:text="@string/minus"
+            android:textSize="18sp"
+            android:backgroundTint="#C9BD587A"
             />
 
         <TextView
-            android:layout_width="80dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="20sp"
-            android:text="@string/_20"
-            android:textAlignment="center"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="100dp"
-            android:layout_height="60dp"
-            android:layout_marginStart="20sp"
-            android:text="@string/stawbery_ice_cream"
-            android:textAlignment="center"
-            android:textSize="20sp" />
-
-        <Button
+            android:id="@+id/quantityText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:backgroundTint="#F2A95E79"
-            android:text="@string/select"/>
+            android:text="@string/_0"
+            android:textSize="20sp"
+            android:layout_marginHorizontal="15dp"
+            />
 
-
+        <Button
+            android:id="@+id/incrementQty"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:text="@string/plus"
+            android:backgroundTint="#C9BD587A"
+            />
     </LinearLayout>
 
+    <!-- Display Price -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/price_bdt_100_each"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginTop="15dp"
+        />
 
+    <TextView
+        android:id="@+id/priceText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/bdt_0"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginTop="5dp"
+        />
 
+    <!-- Rating Bar -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/rate_us"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:layout_marginTop="30dp"
+        android:gravity="center"/>
+
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:stepSize="0.5"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:progressTint="#C9BD587A"
+        android:progressBackgroundTint="#FFEB3B"/>
+
+    <TextView
+        android:id="@+id/ratingText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/rating_0_0"
+        android:textSize="20sp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"/>
+
+    <!-- Place Order Button -->
+    <Button
+        android:id="@+id/placeOrder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/place_order"
+        android:textSize="18sp"
+        android:backgroundTint="#E91E63"
+        />
 
 </LinearLayout>

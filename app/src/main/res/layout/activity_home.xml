@@ -142,8 +142,6 @@
             android:backgroundTint="#C9BD58"
             android:textColor="#FFFFFF" />
     </LinearLayout>
-
-    <!-- Display Price -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -162,6 +160,53 @@
         android:textStyle="bold"
         android:textColor="#333333"
         android:layout_marginTop="5dp" />
+
+    <!-- SeekBar for custom quantity selection -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Adjust Quantity"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="#333333"
+        android:layout_marginTop="15dp" />
+
+    <SeekBar
+        android:id="@+id/quantitySeekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="50"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:id="@+id/seekBarValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Selected: 0"
+        android:textSize="18sp"
+        android:textColor="#333333"
+        android:layout_marginTop="5dp" />
+
+    <!-- Switch for Express Delivery -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Express Delivery?"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="#333333"
+        android:layout_marginTop="15dp" />
+
+    <Switch
+        android:id="@+id/expressDeliverySwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Express Delivery"
+        android:textColor="#333333"
+        android:layout_marginTop="10dp" />
+
+
+
 
     <!-- Rating Bar -->
     <TextView

@@ -1,6 +1,7 @@
 package com.example.android1;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -11,9 +12,10 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class HomeActivity extends AppCompatActivity {
+public class OrderActivity extends AppCompatActivity {
 
     private TextView quantityText, seekBarValue, priceText, ratingText;
     private CheckBox croissant, donut, eclair;
@@ -27,7 +29,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_order);
 
         // Initialize Views
         quantityText = findViewById(R.id.quantityText);
@@ -37,6 +39,7 @@ public class HomeActivity extends AppCompatActivity {
         Button incrementQty = findViewById(R.id.incrementQty);
         Button decrementQty = findViewById(R.id.decrementQty);
         Button placeOrder = findViewById(R.id.placeOrder);
+        Button clearOrder = findViewById(R.id.clearOrder);
         croissant = findViewById(R.id.croissant);
         donut = findViewById(R.id.donut);
         eclair = findViewById(R.id.eclair);
@@ -57,7 +60,7 @@ public class HomeActivity extends AppCompatActivity {
                 quantity--;
                 displayQuantity();
             } else {
-                Toast.makeText(HomeActivity.this, "Quantity cannot be negative", Toast.LENGTH_SHORT).show();
+                Toast.makeText(OrderActivity.this, "Quantity cannot be negative", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -70,20 +73,18 @@ public class HomeActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-            }
+            public void onStartTrackingTouch(SeekBar seekBar) {}
 
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-            }
+            public void onStopTrackingTouch(SeekBar seekBar) {}
         });
 
         // Handle Switch Toggle
         expressDeliverySwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
-                Toast.makeText(HomeActivity.this, "Express Delivery Enabled", Toast.LENGTH_SHORT).show();
+                Toast.makeText(OrderActivity.this, "Express Delivery Enabled", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(HomeActivity.this, "Express Delivery Disabled", Toast.LENGTH_SHORT).show();
+                Toast.makeText(OrderActivity.this, "Express Delivery Disabled", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -92,18 +93,11 @@ public class HomeActivity extends AppCompatActivity {
 
         // Handle Place Order Button
         placeOrder.setOnClickListener(v -> {
-            int selectedSizeId = sizeGroup.getCheckedRadioButtonId();
-            if (quantity == 0 || selectedSizeId == -1 || (!croissant.isChecked() && !donut.isChecked() && !eclair.isChecked())) {
-                Toast.makeText(HomeActivity.this, "Please select items, size, and quantity", Toast.LENGTH_SHORT).show();
-            } else {
-                int totalPrice = quantity * basePrice;
-                if (expressDeliverySwitch.isChecked()) {
-                    totalPrice += 50; // Add express delivery fee
-                }
-                priceText.setText("Price: BDT " + totalPrice);
-                Toast.makeText(HomeActivity.this, "Order placed!", Toast.LENGTH_SHORT).show();
-            }
+            showOrderConfirmationDialog();
         });
+
+        // Handle Clear Order Button
+        clearOrder.setOnClickListener(v -> showClearConfirmationDialog());
     }
 
     // Method to display the current quantity and price
@@ -115,5 +109,58 @@ public class HomeActivity extends AppCompatActivity {
             totalPrice += 50; // Add express delivery fee if enabled
         }
         priceText.setText("Price: BDT " + totalPrice);
+    }
+
+    // Method to reset all input fields
+    private void resetOrderInputs() {
+        quantity = 0;
+        displayQuantity();
+        croissant.setChecked(false);
+        donut.setChecked(false);
+        eclair.setChecked(false);
+        sizeGroup.clearCheck(); // Clear selected size
+        ratingText.setText("Rating: 0"); // Reset rating
+        expressDeliverySwitch.setChecked(false); // Reset express delivery
+        seekBarValue.setText("Selected: 0"); // Reset seek bar value
+    }
+
+    // Method to show order confirmation dialog
+    private void showOrderConfirmationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Confirm Order");
+        builder.setMessage("Are you sure you want to place the order?");
+        builder.setPositiveButton("Yes", (dialog, which) -> {
+            int selectedSizeId = sizeGroup.getCheckedRadioButtonId();
+            if (quantity == 0 || selectedSizeId == -1 || (!croissant.isChecked() && !donut.isChecked() && !eclair.isChecked())) {
+                Toast.makeText(OrderActivity.this, "Please select items, size, and quantity", Toast.LENGTH_SHORT).show();
+            } else {
+                int totalPrice = quantity * basePrice;
+                if (expressDeliverySwitch.isChecked()) {
+                    totalPrice += 50; // Add express delivery fee
+                }
+                priceText.setText("Price: BDT " + totalPrice);
+                Toast.makeText(OrderActivity.this, "Order placed!", Toast.LENGTH_SHORT).show();
+
+                // Reset inputs after placing the order
+                resetOrderInputs();
+            }
+        });
+        builder.setNegativeButton("No", (dialog, which) -> dialog.dismiss());
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    // Method to show clear confirmation dialog
+    private void showClearConfirmationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Clear Order");
+        builder.setMessage("Are you sure you want to clear the order?");
+        builder.setPositiveButton("Yes", (dialog, which) -> {
+            resetOrderInputs();
+            Toast.makeText(OrderActivity.this, "Order cleared!", Toast.LENGTH_SHORT).show();
+        });
+        builder.setNegativeButton("No", (dialog, which) -> dialog.dismiss());
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }

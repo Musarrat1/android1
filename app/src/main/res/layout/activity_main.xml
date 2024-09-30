@@ -9,36 +9,38 @@
     android:orientation="vertical"
     android:backgroundTint="@color/white"
     tools:context=".MainActivity">
+
   <ImageView
       android:id="@+id/logo"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:src="@drawable/images"
       android:layout_marginTop="150dp"
-      android:layout_gravity="center"/>
-    <TextView
-        android:id="@+id/welcome"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/welcome_to_the_bakery"
-        android:layout_gravity="center"
-        android:textAlignment="center"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:textColor="#F2A95E79"
-        android:layout_marginTop="20dp"
+      android:layout_gravity="center" />
 
-        />
-    <Button
-        android:id="@+id/btn_enter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="#F2C34874"
-        android:layout_gravity="center"
-        android:text="@string/enter"
-        android:textColor="@color/white"
-        android:textStyle="normal"/>
+  <TextView
+      android:id="@+id/welcome"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="@string/welcome_to_the_bakery"
+      android:layout_gravity="center"
+      android:textAlignment="center"
+      android:textSize="30sp"
+      android:textStyle="bold"
+      android:textColor="#F2A95E79"
+      android:layout_marginTop="20dp" />
 
 
+
+  <!-- Add this button for navigating to BakeryFormActivity -->
+  <Button
+      android:id="@+id/btn_form"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="20dp"
+      android:backgroundTint="#F2C34874"
+      android:layout_gravity="center"
+      android:text="@string/go_to_form"
+      android:textColor="@color/white"
+      android:textStyle="normal" />
 </LinearLayout>

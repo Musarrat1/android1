@@ -1,7 +1,7 @@
 package com.example.android1;
 
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -47,6 +47,13 @@ public class OrderActivity extends AppCompatActivity {
         SeekBar quantitySeekBar = findViewById(R.id.quantitySeekBar);
         expressDeliverySwitch = findViewById(R.id.expressDeliverySwitch);
         RatingBar ratingBar1 = findViewById(R.id.ratingBar);
+        Button goToBakery = findViewById(R.id.goToBakery);
+
+        // Navigate to BakeryActivity
+        goToBakery.setOnClickListener(v -> {
+            Intent intent = new Intent(OrderActivity.this, BakeryActivity.class);
+            startActivity(intent);
+        });
 
         // Handle Quantity Increment
         incrementQty.setOnClickListener(v -> {

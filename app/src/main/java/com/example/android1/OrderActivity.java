@@ -15,12 +15,13 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+
 public class OrderActivity extends AppCompatActivity {
 
     private TextView quantityText, seekBarValue, priceText, ratingText;
     private CheckBox croissant, donut, eclair;
     private RadioGroup sizeGroup;
-    @SuppressLint("UseSwitchCompatOrMaterialCode")
     private Switch expressDeliverySwitch;
     private int quantity = 0;
     private final int basePrice = 100; // Price per item
@@ -47,13 +48,6 @@ public class OrderActivity extends AppCompatActivity {
         SeekBar quantitySeekBar = findViewById(R.id.quantitySeekBar);
         expressDeliverySwitch = findViewById(R.id.expressDeliverySwitch);
         RatingBar ratingBar1 = findViewById(R.id.ratingBar);
-        Button goToBakery = findViewById(R.id.goToBakery);
-
-        // Navigate to BakeryActivity
-        goToBakery.setOnClickListener(v -> {
-            Intent intent = new Intent(OrderActivity.this, BakeryActivity.class);
-            startActivity(intent);
-        });
 
         // Handle Quantity Increment
         incrementQty.setOnClickListener(v -> {
@@ -100,20 +94,48 @@ public class OrderActivity extends AppCompatActivity {
 
         // Handle Place Order Button
         placeOrder.setOnClickListener(v -> {
-            showOrderConfirmationDialog();
+            int selectedSizeId = sizeGroup.getCheckedRadioButtonId();
+            if (quantity == 0 || selectedSizeId == -1 || (!croissant.isChecked() && !donut.isChecked() && !eclair.isChecked())) {
+                Toast.makeText(OrderActivity.this, "Please select items, size, and quantity", Toast.LENGTH_SHORT).show();
+            } else {
+                String size = selectedSizeId == R.id.small ? "Small" :
+                        selectedSizeId == R.id.medium ? "Medium" : "Large";
+                StringBuilder orderSummary = new StringBuilder("Items: ");
+                if (croissant.isChecked()) orderSummary.append("Croissant, ");
+                if (donut.isChecked()) orderSummary.append("Donut, ");
+                if (eclair.isChecked()) orderSummary.append("Eclair, ");
+                orderSummary.append("\nSize: ").append(size);
+                orderSummary.append("\nQuantity: ").append(quantity);
+
+                int totalPrice = quantity * basePrice;
+                if (expressDeliverySwitch.isChecked()) {
+                    totalPrice += 50;
+                    orderSummary.append("\nExpress Delivery: Yes");
+                } else {
+                    orderSummary.append("\nExpress Delivery: No");
+                }
+                orderSummary.append("\nTotal Price: BDT ").append(totalPrice);
+
+                // Send data to RecyclerViewActivity
+                ArrayList<String> orderList = new ArrayList<>();
+                orderList.add(orderSummary.toString());
+
+                Intent intent = new Intent(OrderActivity.this, RecyclerViewActivity.class);
+                intent.putStringArrayListExtra("orderList", orderList);
+                startActivity(intent);
+            }
         });
 
         // Handle Clear Order Button
-        clearOrder.setOnClickListener(v -> showClearConfirmationDialog());
+        clearOrder.setOnClickListener(v -> resetOrderInputs());
     }
 
     // Method to display the current quantity and price
     private void displayQuantity() {
         quantityText.setText(String.valueOf(quantity));
-        // Calculate and update the price based on the current quantity
         int totalPrice = quantity * basePrice;
         if (expressDeliverySwitch.isChecked()) {
-            totalPrice += 50; // Add express delivery fee if enabled
+            totalPrice += 50;
         }
         priceText.setText("Price: BDT " + totalPrice);
     }
@@ -125,49 +147,9 @@ public class OrderActivity extends AppCompatActivity {
         croissant.setChecked(false);
         donut.setChecked(false);
         eclair.setChecked(false);
-        sizeGroup.clearCheck(); // Clear selected size
-        ratingText.setText("Rating: 0"); // Reset rating
-        expressDeliverySwitch.setChecked(false); // Reset express delivery
-        seekBarValue.setText("Selected: 0"); // Reset seek bar value
-    }
-
-    // Method to show order confirmation dialog
-    private void showOrderConfirmationDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Confirm Order");
-        builder.setMessage("Are you sure you want to place the order?");
-        builder.setPositiveButton("Yes", (dialog, which) -> {
-            int selectedSizeId = sizeGroup.getCheckedRadioButtonId();
-            if (quantity == 0 || selectedSizeId == -1 || (!croissant.isChecked() && !donut.isChecked() && !eclair.isChecked())) {
-                Toast.makeText(OrderActivity.this, "Please select items, size, and quantity", Toast.LENGTH_SHORT).show();
-            } else {
-                int totalPrice = quantity * basePrice;
-                if (expressDeliverySwitch.isChecked()) {
-                    totalPrice += 50; // Add express delivery fee
-                }
-                priceText.setText("Price: BDT " + totalPrice);
-                Toast.makeText(OrderActivity.this, "Order placed!", Toast.LENGTH_SHORT).show();
-
-                // Reset inputs after placing the order
-                resetOrderInputs();
-            }
-        });
-        builder.setNegativeButton("No", (dialog, which) -> dialog.dismiss());
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
-
-    // Method to show clear confirmation dialog
-    private void showClearConfirmationDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Clear Order");
-        builder.setMessage("Are you sure you want to clear the order?");
-        builder.setPositiveButton("Yes", (dialog, which) -> {
-            resetOrderInputs();
-            Toast.makeText(OrderActivity.this, "Order cleared!", Toast.LENGTH_SHORT).show();
-        });
-        builder.setNegativeButton("No", (dialog, which) -> dialog.dismiss());
-        AlertDialog dialog = builder.create();
-        dialog.show();
+        sizeGroup.clearCheck();
+        ratingText.setText("Rating: 0");
+        expressDeliverySwitch.setChecked(false);
+        seekBarValue.setText("Selected: 0");
     }
 }
